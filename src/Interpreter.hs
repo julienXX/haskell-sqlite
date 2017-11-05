@@ -4,11 +4,10 @@ module Interpreter
       console
       -- * Interpreter
     , Command(..), interpret
-      -- * Helpers
-    , queryStartsWithSelect, queryStartsWithInsert, queryStartsWithDot
     )
 where
 
+import ParsingHelper
 import Data.Text
 import Data.Monoid((<>))
 
@@ -26,15 +25,6 @@ interpret query
   | queryStartsWithInsert query = Insert
   | queryStartsWithDot    query = UnknownMeta query
 interpret unknown  = Unknown unknown
-
-queryStartsWithSelect :: Text -> Bool
-queryStartsWithSelect query = "select" `isPrefixOf` query
-
-queryStartsWithInsert :: Text -> Bool
-queryStartsWithInsert query = "insert" `isPrefixOf` query
-
-queryStartsWithDot :: Text -> Bool
-queryStartsWithDot query = Data.Text.head query == '.'
 
 console :: IO ()
 console = do
