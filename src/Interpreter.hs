@@ -27,6 +27,9 @@ interpret query
   | queryStartsWithDot    query = UnknownMeta query
 interpret unknown  = Unknown unknown
 
+outputResponse :: String -> IO()
+outputResponse text = putStrLn text >> console
+
 console :: IO ()
 console = do
   putStr "> "
@@ -34,16 +37,8 @@ console = do
   line <- getLine
   let output = interpret $ pack line
   case output of
-    Exit -> putStrLn "bye !"
-    Select -> do
-      putStrLn "This is where we would do a select."
-      console
-    Insert -> do
-      putStrLn "This is where we would do an insert."
-      console
-    UnknownMeta meta -> do
-      putStrLn ("Unrecognized command: " <> unpack meta)
-      console
-    Unknown com -> do
-      putStrLn ("Unrecognized keyword at start of: " <> unpack com)
-      console
+    Exit             -> putStrLn "bye !"
+    Select           -> outputResponse "This is where we would do a select."
+    Insert           -> outputResponse "This is where we would do an insert."
+    UnknownMeta meta -> outputResponse ("Unrecognized command: " <> unpack meta)
+    Unknown com      -> outputResponse ("Unrecognized keyword at start of: " <> unpack com)
