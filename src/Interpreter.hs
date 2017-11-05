@@ -8,9 +8,7 @@ module Interpreter
 where
 
 import Data.Text
-import Control.Monad(forever)
 import Data.Monoid((<>))
-
 
 data Command = Exit
              | Unknown Text
