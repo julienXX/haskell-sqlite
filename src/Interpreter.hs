@@ -8,6 +8,7 @@ module Interpreter
 where
 
 import ParsingHelper
+import System.IO
 import Data.Text
 import Data.Monoid((<>))
 
@@ -29,6 +30,7 @@ interpret unknown  = Unknown unknown
 console :: IO ()
 console = do
   putStr "> "
+  hFlush stdout
   line <- getLine
   let output = interpret $ pack line
   case output of
